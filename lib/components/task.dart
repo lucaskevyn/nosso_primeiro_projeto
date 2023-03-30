@@ -151,7 +151,8 @@ class _TaskState extends State<Task> {
       ),
     );
   }
-  
+
+  // The level bar changes color if the class level goes up
   Color mudarCorClasse(int nivelClasse) {
     Color color = Colors.blue;
     switch (nivelClasse) {

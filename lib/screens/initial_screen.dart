@@ -1,44 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:nosso_primeiro_projeto/components/task.dart';
+import 'package:nosso_primeiro_projeto/data/task_inherited.dart';
+import 'package:nosso_primeiro_projeto/screens/form_screen.dart';
+
+import '../components/task.dart';
 
 class InitialScreen extends StatefulWidget {
-  const InitialScreen({super.key});
+  const InitialScreen({Key? key}) : super(key: key);
 
   @override
   State<InitialScreen> createState() => _InitialScreenState();
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-  bool opacidade = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            appBar: AppBar(
-              leading: Container(),
-              title: const Text('Tarefas'),
-            ),
-            body: AnimatedOpacity(
-              opacity: opacidade ? 1 : 0,
-              duration: const Duration(milliseconds: 1000),
-              child: ListView(
-                children: const [
-                  Task('Aprender Flutter', 'assets/images/blue_bird.png', 3),
-                  Task('Andar de bike', 'assets/images/bike.jpg', 2),
-                  Task('Meditar', 'assets/images/meditar.jpeg', 5),
-                  Task('Ler', 'assets/images/ler.jpg', 4),
-                  Task('Jogar', 'assets/images/jogar.jpg', 1),
-                  SizedBox(height: 80,)
-                ],
-              ),
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                setState(() {
-                  opacidade = !opacidade;
-                });
-              },
-              child: const Icon(Icons.remove_red_eye),
-            ));
-
+        appBar: AppBar(
+          leading: Container(),
+          title: const Text('Tarefas'),
+        ),
+        body: ListView(
+          children: TaskInherited.of(context).taskList,
+          padding: EdgeInsets.only(top: 8, bottom: 70),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (contextNew) => FormScreen(
+                    taskContext: context,
+                ),
+              )
+            );
+            // TaskInherited.of(context).newTask('Jogar', 'assets/images/jogar.jpg', 1);
+          },
+          child: const Icon(Icons.add),
+        ));
   }
 }

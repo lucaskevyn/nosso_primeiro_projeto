@@ -9,7 +9,7 @@ class Task extends StatefulWidget {
   Task(this.nome, this.foto, this.dificuldade, {Key? key}) : super(key: key);
 
   int nivel = 0;
-  int nivel_classe = 0;
+  int nivelClasse = 0;
 
   @override
   State<Task> createState() => _TaskState();
@@ -32,7 +32,7 @@ class _TaskState extends State<Task> {
           Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: mudarCorClasse(widget.nivel_classe),
+                color: mudarCorClasse(widget.nivelClasse),
               ),
               height: 140),
           Column(
@@ -71,8 +71,9 @@ class _TaskState extends State<Task> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //Inverter Expanded com sizedbox se der erro
                             SizedBox(
-                                width: MediaQuery.of(context).size.width*0.4,
+                                width: MediaQuery.of(context).size.width * 0.4,
                                 child: Expanded(
                                   child: Text(
                                     widget.nome,
@@ -98,11 +99,11 @@ class _TaskState extends State<Task> {
                                     setState(() {
                                       if (widget.nivel <
                                               widget.dificuldade * 10 ||
-                                          widget.nivel_classe == 5) {
+                                          widget.nivelClasse == 5) {
                                         widget.nivel++;
                                       } else {
                                         widget.nivel = 1;
-                                        widget.nivel_classe++;
+                                        widget.nivelClasse++;
                                       }
                                     });
                                     // print(nivel);
@@ -126,9 +127,9 @@ class _TaskState extends State<Task> {
                                     setState(() {
                                       if (widget.nivel > 1) {
                                         widget.nivel--;
-                                      } else if (widget.nivel_classe > 0) {
+                                      } else if (widget.nivelClasse > 0) {
                                         widget.nivel = widget.dificuldade * 10;
-                                        widget.nivel_classe--;
+                                        widget.nivelClasse--;
                                       }
                                     });
                                     // print(nivel);
@@ -167,7 +168,7 @@ class _TaskState extends State<Task> {
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
                       'Nível ${widget.nivel}',
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ),
                 ],

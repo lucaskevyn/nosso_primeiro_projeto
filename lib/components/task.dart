@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nosso_primeiro_projeto/data/taskDao.dart';
 
 import 'difficulty.dart';
 
@@ -95,6 +96,26 @@ class _TaskState extends State<Task> {
                               height: 52,
                               width: 52,
                               child: ElevatedButton(
+                                  onLongPress: () {
+                                    AlertDialog(
+                                      title: Text('Remover'),
+                                      content: Text(
+                                          'Deseja mesmo remover a tarefa?'),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('Não')),
+                                        TextButton(
+                                            onPressed: () {
+                                              TaskDao().delete(widget.nome);
+                                            },
+                                            child: Text('Sim')),
+                                      ],
+                                      elevation: 24.0,
+                                    );
+                                  },
                                   onPressed: () {
                                     setState(() {
                                       if (widget.nivel <

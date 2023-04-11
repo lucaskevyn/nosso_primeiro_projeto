@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nosso_primeiro_projeto/data/taskDao.dart';
 import 'package:nosso_primeiro_projeto/data/task_inherited.dart';
+
+import '../components/task.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({Key? key, required this.taskContext}) : super(key: key);
@@ -18,17 +21,17 @@ class _FormScreenState extends State<FormScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool valueValidator(String? value) {
-    if (value != null && value.isEmpty) {
+    if (value == null || value.isEmpty) {
       return true;
     }
     return false;
   }
 
   bool difficultyValidator(String? value) {
-    if (value != null && value.isEmpty) {
-      if (int.parse(value) > 5 || int.parse(value) < 1) {
-        return true;
-      }
+    if (value == null || value.isEmpty) {
+      return true;
+    } else if (int.parse(value) > 5 || int.parse(value) < 1) {
+      return true;
     }
     return false;
   }
@@ -140,13 +143,14 @@ class _FormScreenState extends State<FormScreen> {
                     ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            // print(nameController.text);
-                            // print(difficultyController.text);
-                            // print(imageController.text);
-                            TaskInherited.of(widget.taskContext).newTask(
+                            TaskDao().save(Task(
                                 nameController.text,
                                 imageController.text,
-                                int.parse(difficultyController.text));
+                                int.parse(difficultyController.text)));
+                            // TaskInherited.of(widget.taskContext).newTask(
+                            //     nameController.text,
+                            //     imageController.text,
+                            //     int.parse(difficultyController.text));
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Salvando nova Tarefa...'),
